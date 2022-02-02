@@ -1,7 +1,10 @@
 from rest_framework import serializers
+
 from todoapi.models import Task, TaskHistory, User
 
+
 class TaskSerializer(serializers.ModelSerializer):
+    '''This is a Serializer for Task Model'''
     
     class Meta:
         model = Task
@@ -11,12 +14,14 @@ class TaskSerializer(serializers.ModelSerializer):
         # }
     
 class TaskHistorySerializer(serializers.ModelSerializer):
+    '''This is a Serializer for TaskHistory Model'''
     
     class Meta:
         model = TaskHistory
         fields = '__all__'
         
 class UserSerializer(serializers.ModelSerializer):
+    '''This  is a Serializer for User Model'''
     
     class Meta:
         model = User
@@ -32,8 +37,8 @@ class UserSerializer(serializers.ModelSerializer):
     
     def validate_password(self,value):
         '''
-        This function applies Length and AlphaNumeric Validation on the 
-        Password Field
+            This function applies Length and AlphaNumeric Validation on the 
+            Password Field
         '''
         
         if len(value) < 8 or len(value) > 51:
