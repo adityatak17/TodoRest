@@ -1,8 +1,10 @@
 from django.db.models.signals import post_save,post_delete,pre_save
 from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+from django.conf import settings
 # from collections import namedtuple
 
-from .models import TaskHistory,Task
+from .models import TaskHistory,Task,User
         
     
 @receiver(pre_save,sender=Task)
@@ -110,4 +112,13 @@ def save_task_history(sender,instance,created,**kwargs):
             changes_made=changes_heading
         )
         
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    '''
+        This function will Create Token whenever we create a new User.
+        We can generate token diretly  without registering a User 
+    '''
+    
+    if created:
+        Token.objects.create(user=instance)
 

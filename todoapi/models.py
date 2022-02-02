@@ -15,6 +15,7 @@ class User(AbstractUser):
     phone=models.CharField(max_length=10)
     designation=models.CharField(max_length=20,choices=DESIGNATION,default="employee")
     password=models.CharField(max_length=51)
+    password2=models.CharField(max_length=51)
 
 
 TASK_STATUS=(
@@ -50,6 +51,7 @@ class TaskHistory(models.Model):
     
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
+    
     class Meta:
         verbose_name_plural='Task Histories'
         default_permissions=('view',)

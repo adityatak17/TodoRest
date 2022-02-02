@@ -56,6 +56,7 @@ class RegisterUser(views.APIView):
     def post(self,request):
         '''This method Registers a User and Generates Token for it'''
         
+        # import  pdb; pdb.set_trace()
         serializer=UserSerializer(data=request.data)
         
         if serializer.is_valid(raise_exception=True):
@@ -71,8 +72,9 @@ class CustomAuthToken(ObtainAuthToken):
         This Class is used to get the Token when a User provides valid
         username and password.
         This is Overriding the inbuilt rest framework method "views.obtain_auth_token"
-        which returns the token's key.
-        '''
+        which returns only the token's key.
+        With this method we can return more details about the User
+    '''
     
     def post(self,request,*args,**kwargs):
         serializer=self.serializer_class(data=request.data,context={'request':request})
@@ -86,6 +88,9 @@ class CustomAuthToken(ObtainAuthToken):
         })
         
 class LogoutUser(views.APIView):
+    '''
+        This Class will Log the User out and will delete the Authentication Token
+    '''
     
     authentication_classes=[authentication.TokenAuthentication,]
     permission_classes=[permissions.IsAuthenticated,]
@@ -98,12 +103,3 @@ class LogoutUser(views.APIView):
         logout(request)
         return Response({'msg':"You have been logged out"})
     
-    
-# def logout_page(request):
-    
-#     logout(request)
-#     return HttpResponse("You Have been Logged Out")
-
-
-    
-
